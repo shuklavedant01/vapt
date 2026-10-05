@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAPT Mastery Portal: Zero to Advanced</title>
+    <!-- Google Fonts for Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app.css">
+    <!-- FontAwesome for minimal clean icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <span class="brand-icon"><i class="fa-solid fa-shield-halved"></i></span>
+                    <div class="brand-text">
+                        <h1>VAPT Mastery</h1>
+                        <span>Roadmap & Tracker</span>
+                    </div>
+                </div>
+                <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Global Progress Tracker Card -->
+            <div class="global-progress-card">
+                <div class="progress-info">
+                    <span class="progress-label">Total Progress</span>
+                    <span class="progress-percentage" id="globalProgressPercent">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="globalProgressBar" style="width: 0%;"></div>
+                </div>
+                <div class="progress-stats">
+                    <span id="globalCompletedCount">0</span> of <span id="globalTotalCount">0</span> items completed
+                </div>
+            </div>
+
+            <!-- Navigation Links (Phases) -->
+            <nav class="phase-nav">
+                <div class="nav-section-title">ROADMAP PHASES</div>
+                <ul class="nav-list" id="phaseNavList">
+                    <!-- Dynamic rendering in JS -->
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="resetProgressBtn" class="secondary-btn btn-sm">
+                    <i class="fa-solid fa-rotate-left"></i> Reset Progress
+                </button>
+                <div class="backup-actions">
+                    <button id="exportProgressBtn" class="icon-btn-text" title="Export Progress JSON">
+                        <i class="fa-solid fa-download"></i> Export
+                    </button>
+                    <button id="importProgressBtn" class="icon-btn-text" title="Import Progress JSON">
+                        <i class="fa-solid fa-upload"></i> Import
+                    </button>
+                    <input type="file" id="importFileInput" style="display: none;" accept=".json">
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Panel -->
+        <main class="main-content">
+            <!-- Top Navigation / Search / Timer Header -->
+            <header class="app-header">
+                <div class="header-left">
+                    <button class="toggle-sidebar-btn" id="toggleSidebar" aria-label="Open sidebar">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <!-- Search Bar -->
+                    <div class="search-container">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="searchInput" placeholder="Search tools, topics, vulnerabilities, labs...">
+                        <button id="clearSearchBtn" class="clear-search-btn" style="display: none;">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Theme">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    <!-- Minimalist Study Timer -->
+                    <div class="study-timer" id="studyTimer">
+                        <span class="timer-icon"><i class="fa-solid fa-hourglass-start"></i></span>
+                        <span class="timer-display" id="timerDisplay">25:00</span>
+                        <button class="timer-control" id="timerPlayPauseBtn" title="Start/Pause Timer">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                        <button class="timer-control" id="timerResetBtn" title="Reset Timer">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard / Search Results View -->
+            <div class="content-body" id="contentBody">
+                <!-- Search Result Panel (Hidden by default) -->
+                <div class="search-results-panel" id="searchResultsPanel" style="display: none;">
+                    <div class="panel-header">
+                        <h2>Search Results for "<span id="searchQuerySpan"></span>"</h2>
+                        <button class="close-results-btn" id="closeSearchResults">
+                            <i class="fa-solid fa-xmark"></i> Back to Phase
+                        </button>
+                    </div>
+                    <div class="search-results-list" id="searchResultsList">
+                        <!-- Dynamic rendering in JS -->
+                    </div>
+                </div>
+
+                <!-- Main Active Phase View -->
+                <div class="phase-detail-view" id="phaseDetailView">
+                    <div class="phase-header-banner" id="phaseHeaderBanner">
+                        <div class="phase-badge" id="phaseBadge">PHASE 0</div>
+                        <h2 class="phase-title" id="phaseTitle">Foundations</h2>
+                        <p class="phase-subtitle" id="phaseSubtitle">You cannot pentest what you don't understand. Skipping this phase is the #1 reason people plateau at "script kiddie" level.</p>
+                        
+                        <div class="phase-progress-row">
+                            <div class="phase-progress-text">Phase Progress: <span id="phaseProgressPercent">0%</span></div>
+                            <div class="phase-progress-bar-container">
+                                <div class="phase-progress-bar-fill" id="phaseProgressBar" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="phase-content-layout">
+                        <!-- Left Side: Parts & Subparts -->
+                        <div class="phase-checklist-container">
+                            <div class="parts-list" id="partsList">
+                                <!-- Dynamic rendering of Parts and Checklist items -->
+                            </div>
+                        </div>
+
+                        <!-- Right Side: Sticky Notes & Resources -->
+                        <div class="phase-meta-container">
+                            <!-- Notes Section -->
+                            <div class="meta-card notes-card">
+                                <div class="card-header">
+                                    <h3><i class="fa-solid fa-pen-to-square"></i> Study Notes & Lab Logs</h3>
+                                    <span class="save-indicator" id="notesSaveIndicator">Saved</span>
+                                </div>
+                                <div class="card-body">
+                                    <textarea id="phaseNotesTextarea" placeholder="Jot down notes, commands, lab IP addresses, credentials, or goals for this phase..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Tools & Labs Highlight box -->
+                            <div class="meta-card highlights-card" id="highlightsCard">
+                                <div class="card-header">
+                                    <h3><i class="fa-solid fa-screwdriver-wrench"></i> Phase Resources</h3>
+                                </div>
+                                <div class="card-body" id="phaseResourcesContent">
+                                    <!-- Dynamic content based on phase -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification system for timer & interactions -->
+    <div class="notification-toast" id="notificationToast">
+        <span class="notification-text" id="notificationText">Timer completed! Time for a break.</span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
